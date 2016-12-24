@@ -1,0 +1,85 @@
+<div class="content">
+<div class="col-md-12">
+  <div class="col-md-8">
+    <div class="bootstrap-table">
+      <div class="fixed-table-toolbar"></div>
+      <div class="fixed-table-container" style="padding-bottom: 40px;">
+        <div class="fixed-table-header" style="margin-right: 0px;">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th {{action 'sort' 'createdAt'}}>
+                  {{#if (eq sortField 'createdAt')}}
+                    <div class="th-inner sortable {{if (eq sortType 'asc') 'asc' 'desc'}}">Created At</div>
+                  {{else}}
+                    <div class="th-inner sortable both">Created At</div>
+                  {{/if}}
+                  <div class="fht-cell"></div>
+                </th>
+                <th {{action 'sort' 'counterpartyName'}}>
+                  {{#if (eq sortField 'counterpartyName')}}
+                    <div class="th-inner sortable {{if (eq sortType 'asc') 'asc' 'desc'}}">Counterparty Name</div>
+                  {{else}}
+                    <div class="th-inner sortable both">Counterparty Name</div>
+                  {{/if}}
+                  <div class="fht-cell"></div>
+                </th>
+                <th {{action 'sort' 'operationType'}}>
+                  {{#if (eq sortField 'operationType')}}
+                    <div class="th-inner sortable {{if (eq sortType 'asc') 'asc' 'desc'}}">Payment type</div>
+                  {{else}}
+                    <div class="th-inner sortable both">Payment type</div>
+                  {{/if}}
+                  <div class="fht-cell"></div>
+                </th>
+                <th {{action 'sort' 'amount'}}>
+                  {{#if (eq sortField 'amount')}}
+                    <div class="th-inner sortable {{if (eq sortType 'asc') 'asc' 'desc'}}">Amount</div>
+                  {{else}}
+                    <div class="th-inner sortable both">Amount</div>
+                  {{/if}}
+                  <div class="fht-cell"></div>
+                </th>
+                <th>
+                  <div class="th-inner">Attachments</div>
+                  <div class="fht-cell"></div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each sortedCollection as |transaction|}}
+              <tr {{action 'selectItem' transaction}} class="{{if (eq selectedItem transaction) 'active' ''}}">
+                  <td>
+                    {{formatted-date transaction.createdAt}}
+                  </td>
+                  <td>
+                    {{transaction.counterpartyName}}
+                  </td>
+                  <td>
+                    {{transaction.operationType}}
+                  </td>
+                  <td>
+                    {{transaction.amount}}
+                  </td>
+                  <td>
+                    {{#each transaction.attachements as |attachement|}}
+                      <a href="{{attachement.url}}" target="_blank">Attachment</a>
+                    {{/each}}
+                  </td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    {{#if selectedItem}}
+      <h3>Details:</h3>
+      {{x-item-details item=selectedItem}}
+    {{/if}}
+  </div>
+</div>
+</div>
